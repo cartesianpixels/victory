@@ -3,13 +3,16 @@
     'use strict';
 
     // ============================================================
-    // CONFIGURATION - REPLACE THESE WITH YOUR EMAILJS CREDENTIALS
+    // CONFIGURATION - REPLACE THESE WITH YOUR OFFICIAL EMAILJS CREDENTIALS
     // ============================================================
-    // Get these from: https://dashboard.emailjs.com/
+    // Dashboard: https://dashboard.emailjs.com/
+    // IMPORTANT SECURITY RECOMMENDATION:
+    // In EmailJS Account > Security, enable "Allow EmailJS API requests only from specific domains"
+    // and add: https://victory-school.com (and localhost for testing)
     
     const EMAILJS_CONFIG = {
-        publicKey: 'UnTHOEPqC8Lo9xxyR',      // From Account > API Keys
-        serviceID: 'service_m6xvz5l',        // From Email Services
+        publicKey: 'UnTHOEPqC8Lo9xxyR',      // From Account > API Keys (Replace with your school account key)
+        serviceID: 'service_m6xvz5l',        // From Email Services (e.g. connected to etablissementvictory@gmail.com)
         templateID: 'template_mc43xlr'       // From Email Templates
     };
 
@@ -118,15 +121,30 @@
     }
 
     // ============================================================
-    // FORM VALIDATION
+    // FORM VALIDATION & SANITIZATION
     // ============================================================
     
+    // Strip HTML markup to prevent stored or reflected script injections in emails
+    function sanitizeInput(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/[<>]/g, '')
+            .trim();
+    }
+
     function validateForm(formData) {
-        const name = formData.get('name')?.trim();
-        const email = formData.get('email')?.trim();
-        const phone = formData.get('phone')?.trim();
-        const subject = formData.get('subject')?.trim();
-        const message = formData.get('message')?.trim();
+        // Honeypot check: If the hidden honeypot field is filled, it is an automated bot
+        const honeypot = formData.get('contact_company_hp');
+        if (honeypot && honeypot.trim().length > 0) {
+            console.warn('🤖 Spam bot trapped by honeypot field.');
+            return 'bot_trapped';
+        }
+
+        const name = sanitizeInput(formData.get('name'));
+        const email = sanitizeInput(formData.get('email'));
+        const phone = sanitizeInput(formData.get('phone'));
+        const subject = sanitizeInput(formData.get('subject'));
+        const message = sanitizeInput(formData.get('message'));
         
         if (!name || name.length < 2) {
             showErrorMessage('Veuillez entrer un nom valide (minimum 2 caractères)');
@@ -169,7 +187,19 @@
         const formData = new FormData(form);
         
         // Validate form
-        if (!validateForm(formData)) {
+        const validation = validateForm(formData);
+        if (validation === 'bot_trapped') {
+            // Simulated submission to satisfy bot crawlers without consuming EmailJS quota
+            setLoadingState(true);
+            setTimeout(() => {
+                setLoadingState(false);
+                showSuccessMessage();
+                form.reset();
+            }, 600);
+            return;
+        }
+        
+        if (!validation) {
             console.log('❌ Form validation failed');
             return;
         }
@@ -192,13 +222,13 @@
         if (errorDiv) errorDiv.classList.add('hidden');
         
         try {
-            // Prepare template parameters
+            // Prepare sanitized template parameters
             const templateParams = {
-                from_name: formData.get('name'),
-                from_email: formData.get('email'),
-                phone: formData.get('phone'),
-                subject: formData.get('subject'),
-                message: formData.get('message'),
+                from_name: sanitizeInput(formData.get('name')),
+                from_email: sanitizeInput(formData.get('email')),
+                phone: sanitizeInput(formData.get('phone')),
+                subject: sanitizeInput(formData.get('subject')),
+                message: sanitizeInput(formData.get('message')),
                 to_email: 'etablissementvictory@gmail.com'
             };
             

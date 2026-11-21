@@ -1,0 +1,11 @@
+# Internal and sensitive documentation
+docs_internal/
+
+# Environment files and credentials
+.env
+.env.*
+*.local
+
+# OS and system files
+.DS_Store
+Thumbs.db

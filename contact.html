@@ -6,10 +6,13 @@
     <title>Contact - École Victory</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
 
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-3B6NwesSXE7YJlcLI9RpRqGf2p/EgVH8BgoKTaUrmKNDkHPStTQ3EyoYjCGXaOTS" crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -210,6 +213,11 @@
                 </div>
 
                 <form id="contactForm" class="space-y-5">
+                    <!-- Anti-spam Honeypot field (hidden from real users, traps automated bots) -->
+                    <div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+                        <label for="contact_company_hp">Ne pas remplir ce champ si vous êtes humain</label>
+                        <input type="text" id="contact_company_hp" name="contact_company_hp" tabindex="-1" autocomplete="off">
+                    </div>
                     <div class="grid md:grid-cols-2 gap-5">
                         <div data-aos="fade-up" data-aos-delay="100">
                             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
@@ -379,7 +387,7 @@
 
     <!-- Footer will be injected here by components.js -->
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu" crossorigin="anonymous"></script>
     
     <!-- components.js already included in <head> with defer -->
     <script>
@@ -392,54 +400,10 @@
     </script>
 
     <script>
-        // Form submission with enhanced UX
+        // Form field validation feedback (Actual submission is handled securely by js/emailjs-contact.js)
         const contactForm = document.getElementById('contactForm');
-        const formSuccess = document.getElementById('formSuccess');
         
         if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                // Get form button
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                const originalBtnText = submitBtn.innerHTML;
-                
-                // Show loading state
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = `
-                    <svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                    </svg>
-                    Envoi en cours...
-                `;
-                
-                // Simulate form submission (replace with actual API call)
-                setTimeout(() => {
-                    // Show success message
-                    formSuccess.classList.remove('hidden');
-                    formSuccess.classList.add('animate-fade-in');
-                    
-                    // Reset form
-                    contactForm.reset();
-                    
-                    // Restore button
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalBtnText;
-                    
-                    // Scroll to success message
-                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        formSuccess.classList.add('hidden');
-                    }, 5000);
-                    
-                    // TODO: Add actual form submission logic here
-                    // Example: fetch('/api/contact', { method: 'POST', body: new FormData(contactForm) })
-                    
-                }, 1500);
-            });
-            
             // Add input validation feedback
             const inputs = contactForm.querySelectorAll('input, textarea, select');
             inputs.forEach(input => {
@@ -470,7 +434,7 @@
     <script src="js/cambridge-float.js"></script>
     
     <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS" crossorigin="anonymous"></script>
     
     <!-- EmailJS Contact Form Integration -->
     <script src="js/emailjs-contact.js"></script>
