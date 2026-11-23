@@ -652,19 +652,10 @@ async function loadPage(url, pushState = true) {
 }
 
 // Initialize page-specific scripts
-// Function to attach navigation event listeners
+// Function to attach navigation event listeners (Native browser navigation for 100% script & form reliability)
 function attachNavigationListeners() {
-    // Add event listeners for navigation links
-    const navLinks = document.querySelectorAll('[data-navigation]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = this.getAttribute('href');
-            if (url) {
-                loadPage(url);
-            }
-        });
-    });
+    // Native navigation preserves full script execution across pages
+    highlightCurrentPage();
 }
 
 function initPageScripts() {
@@ -678,8 +669,8 @@ function initPageScripts() {
         window.AOS.refreshHard();
     }
     
-    // Re-attach navigation event listeners
-    attachNavigationListeners();
+    // Highlight active link
+    highlightCurrentPage();
     
     // Ensure footer is included
     includeFooter();
@@ -743,16 +734,27 @@ function highlightCurrentPage() {
     });
 }
 
-// Initialize brand splash screen
+// Initialize brand splash screen (Smooth, non-blocking fade with session memory)
 function initSplashScreen() {
     const splashEl = document.getElementById('splash-screen');
     if (!splashEl) return;
 
-    // Disable body scroll while splash is active
+    // Check if splash was already shown in this browser session
+    try {
+        if (sessionStorage.getItem('victory_splash_shown')) {
+            splashEl.remove();
+            return;
+        }
+        sessionStorage.setItem('victory_splash_shown', 'true');
+    } catch (e) {
+        // Fallback if sessionStorage is restricted
+    }
+
+    // Disable body scroll briefly while initial splash renders
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    // Fade out and remove splash screen after 5 seconds total (4.5s progress + 0.5s fade transition)
+    // Fast, elegant 700ms brand intro instead of 5-second lock
     setTimeout(() => {
         splashEl.classList.add('fade-out');
         document.body.style.overflow = originalOverflow;
@@ -761,8 +763,8 @@ function initSplashScreen() {
             if (window.AOS) {
                 window.AOS.refresh();
             }
-        }, 500); // Wait for the transition to finish (total 5000ms)
-    }, 4500);
+        }, 400);
+    }, 700);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -775,19 +777,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize navbar and other components
     includeNavbar();
     includeFooter();
-    
-    // Handle navigation clicks
-    document.addEventListener('click', function(e) {
-        // Check if the clicked element or its parent is a navigation link
-        let target = e.target.closest('[data-navigation]');
-        if (target && target.tagName === 'A') {
-            e.preventDefault();
-            const href = target.getAttribute('href');
-            if (href !== window.location.pathname) {
-                loadPage(href);
-            }
-        }
-    });
     
     // Initialize page scripts
     initPageScripts();

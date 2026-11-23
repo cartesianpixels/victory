@@ -91,30 +91,23 @@
 
         <!-- Mobile Layout (flex on mobile, hidden on desktop) -->
         <div class="flex md:hidden items-center justify-between">
-            <!-- Left: Mobile Menu Button (Hamburger) -->
-            <button type="button" id="mobile-menu-button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-xl text-gray-700 hover:text-red-800 hover:bg-red-50 focus:outline-none transition-all duration-300" aria-label="Menu principal" aria-expanded="false">
-                <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-
-            <!-- Center: Logo -->
-            <a href="index.html" class="flex items-center group mx-auto" data-navigation>
+            <!-- Left: Logo -->
+            <a href="index.html" class="flex items-center group" data-navigation>
                 <div class="h-9 w-auto transition-transform duration-300 group-hover:scale-105">
                     <img src="logo/new_full_logo.svg" alt="École Victory Logo" class="h-full w-auto object-contain">
                 </div>
             </a>
 
-            <!-- Right: Social Quick Links -->
+            <!-- Right: WhatsApp & Right-aligned Mobile Menu Button (Ergonomic Thumb Reach) -->
             <div class="flex items-center space-x-2">
-                <!-- Facebook -->
-                <a href="https://www.facebook.com/profile.php?id=100079189773040" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-all duration-300 transform hover:scale-110" title="Facebook">
-                    <i class="fab fa-facebook-f text-sm"></i>
-                </a>
-                <!-- WhatsApp -->
-                <a href="https://wa.me/212666979929" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#25D366] hover:text-white transition-all duration-300 transform hover:scale-110" title="WhatsApp">
+                <a href="https://wa.me/212666979929" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#25D366] hover:text-white transition-all duration-300" title="WhatsApp">
                     <i class="fab fa-whatsapp text-base"></i>
                 </a>
+                <button type="button" id="mobile-menu-button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-xl text-gray-700 hover:text-red-800 hover:bg-red-50 focus:outline-none transition-all duration-300" aria-label="Menu principal" aria-expanded="false">
+                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
