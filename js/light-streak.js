@@ -4,12 +4,12 @@
 (function() {
     'use strict';
 
-    // Configuration
+    // Configuration (Subtle & elegant ambient styling)
     const config = {
-        streakCount: 8,           // Number of diagonal streaks
-        particleCount: 6,         // Number of floating particles
-        enableParticles: true,    // Enable/disable particles
-        enableGlow: true          // Enable/disable ambient glow
+        streakCount: 3,           // Subdued count to avoid text distraction
+        particleCount: 2,         // Minimalist ambient particles
+        enableParticles: false,   // Disable floating particles to keep text clean
+        enableGlow: true          // Subtle ambient glow
     };
 
     // Create light streak container
@@ -65,6 +65,11 @@
 
     // Initialize light streaks
     function initLightStreaks() {
+        // Disable on mobile/tablet viewports to protect battery, GPU and text readability
+        if (window.innerWidth < 1024) {
+            return;
+        }
+
         // Check if user prefers reduced motion
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) {

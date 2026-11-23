@@ -11,9 +11,9 @@
 
     // Configuration
     const config = {
-        showDelay: 2000, // Show after 2 seconds
+        showDelay: 4000, // Show after 4 seconds of reading
         cookieName: 'cambridge_float_closed',
-        cookieDays: 1/24, // Remember close for 1 day
+        cookieDays: 30, // Remember close for 30 days
     };
     
     // Flag to prevent multiple initializations within this scope
@@ -85,12 +85,16 @@
         return true;
     }
 
-    // Show the card
+    // Show the card (Desktop only to prevent blocking mobile reading)
     function showCard() {
+        if (window.innerWidth < 768) return;
+        
         const card = document.getElementById('cambridgeFloatCard');
         if (card) {
             setTimeout(() => {
-                card.classList.remove('hidden');
+                if (window.innerWidth >= 768) {
+                    card.classList.remove('hidden');
+                }
             }, config.showDelay);
         }
     }

@@ -80,7 +80,7 @@ const navbarHTML = `
                 <!-- Social Icons -->
                 <div class="flex items-center space-x-2 border-l border-gray-200 pl-4">
                     <!-- Facebook -->
-                    <a href="https://www.facebook.com/profile.php?id=100078488511882&mibextid=wwXIfr&rdid=fddX5LxKPHcN3zwj&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19qyFc1D5d%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-all duration-300 transform hover:scale-110" title="Facebook">
+                    <a href="https://www.facebook.com/profile.php?id=100079189773040" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-all duration-300 transform hover:scale-110" title="Facebook">
                         <i class="fab fa-facebook-f text-sm"></i>
                     </a>
                     <!-- WhatsApp -->
@@ -115,7 +115,7 @@ const navbarHTML = `
             <!-- Right: Social Quick Links -->
             <div class="flex items-center space-x-2">
                 <!-- Facebook -->
-                <a href="https://www.facebook.com/profile.php?id=100078488511882&mibextid=wwXIfr&rdid=fddX5LxKPHcN3zwj&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19qyFc1D5d%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-all duration-300 transform hover:scale-110" title="Facebook">
+                <a href="https://www.facebook.com/profile.php?id=100079189773040" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:bg-[#1877F2] hover:text-white transition-all duration-300 transform hover:scale-110" title="Facebook">
                     <i class="fab fa-facebook-f text-sm"></i>
                 </a>
                 <!-- WhatsApp -->
@@ -242,7 +242,7 @@ const navbarHTML = `
 
                 <!-- Social media links -->
                 <div class="flex items-center space-x-3 pt-1">
-                    <a href="https://www.facebook.com/profile.php?id=100078488511882&mibextid=wwXIfr&rdid=fddX5LxKPHcN3zwj&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19qyFc1D5d%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-150 hover:bg-[#1877F2] text-gray-500 hover:text-white transition-all duration-300 transform hover:scale-105">
+                    <a href="https://www.facebook.com/profile.php?id=100079189773040" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-150 hover:bg-[#1877F2] text-gray-500 hover:text-white transition-all duration-300 transform hover:scale-105">
                         <i class="fab fa-facebook-f text-sm"></i>
                     </a>
                     <a href="https://wa.me/212666979929" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-xl flex items-center justify-center bg-gray-150 hover:bg-[#25D366] text-gray-500 hover:text-white transition-all duration-300 transform hover:scale-105">
@@ -308,7 +308,7 @@ const footerHTML = `
                 </div>
                 <p class="text-gray-400 leading-relaxed">Établissement d'enseignement d'excellence à Laâyoune, dédié à former les leaders de demain avec une préparation certifiée Cambridge.</p>
                 <div class="flex gap-3 pt-2">
-                    <a href="https://www.facebook.com/profile.php?id=100078488511882&mibextid=wwXIfr&rdid=fddX5LxKPHcN3zwj&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19qyFc1D5d%2F%3Fmibextid%3DwwXIfr" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gray-800 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                    <a href="https://www.facebook.com/profile.php?id=100079189773040" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-gray-800 hover:bg-red-700 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
                         <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
                             <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
@@ -652,19 +652,10 @@ async function loadPage(url, pushState = true) {
 }
 
 // Initialize page-specific scripts
-// Function to attach navigation event listeners
+// Function to attach navigation event listeners (Native browser navigation for 100% script & form reliability)
 function attachNavigationListeners() {
-    // Add event listeners for navigation links
-    const navLinks = document.querySelectorAll('[data-navigation]');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const url = this.getAttribute('href');
-            if (url) {
-                loadPage(url);
-            }
-        });
-    });
+    // Native navigation preserves full script execution across pages
+    highlightCurrentPage();
 }
 
 function initPageScripts() {
@@ -678,8 +669,8 @@ function initPageScripts() {
         window.AOS.refreshHard();
     }
     
-    // Re-attach navigation event listeners
-    attachNavigationListeners();
+    // Highlight active link
+    highlightCurrentPage();
     
     // Ensure footer is included
     includeFooter();
@@ -743,16 +734,27 @@ function highlightCurrentPage() {
     });
 }
 
-// Initialize brand splash screen
+// Initialize brand splash screen (Smooth, non-blocking fade with session memory)
 function initSplashScreen() {
     const splashEl = document.getElementById('splash-screen');
     if (!splashEl) return;
 
-    // Disable body scroll while splash is active
+    // Check if splash was already shown in this browser session
+    try {
+        if (sessionStorage.getItem('victory_splash_shown')) {
+            splashEl.remove();
+            return;
+        }
+        sessionStorage.setItem('victory_splash_shown', 'true');
+    } catch (e) {
+        // Fallback if sessionStorage is restricted
+    }
+
+    // Disable body scroll briefly while initial splash renders
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    // Fade out and remove splash screen after 5 seconds total (4.5s progress + 0.5s fade transition)
+    // Fast, elegant 700ms brand intro instead of 5-second lock
     setTimeout(() => {
         splashEl.classList.add('fade-out');
         document.body.style.overflow = originalOverflow;
@@ -761,8 +763,8 @@ function initSplashScreen() {
             if (window.AOS) {
                 window.AOS.refresh();
             }
-        }, 500); // Wait for the transition to finish (total 5000ms)
-    }, 4500);
+        }, 400);
+    }, 700);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -775,19 +777,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize navbar and other components
     includeNavbar();
     includeFooter();
-    
-    // Handle navigation clicks
-    document.addEventListener('click', function(e) {
-        // Check if the clicked element or its parent is a navigation link
-        let target = e.target.closest('[data-navigation]');
-        if (target && target.tagName === 'A') {
-            e.preventDefault();
-            const href = target.getAttribute('href');
-            if (href !== window.location.pathname) {
-                loadPage(href);
-            }
-        }
-    });
     
     // Initialize page scripts
     initPageScripts();
